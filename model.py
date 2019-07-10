@@ -13,53 +13,17 @@ class Plosca:
             tabela.append(vrstica)
         
         self.tabela = tabela
-        
 
-    def v_redu_plosca(self):
-        plosca = None
-        while plosca is None:
-            plosca = self.poskusna_plosca()
-        return plosca
-
-#tole je treba še enkrat:
-    def poskusna_plosca(self):
+        slovar = {}
         for i in range(9):
             for j in range(9):
-                stevilo = random.choice(stevilke)
-                if self.preglej_vrstico(stevilo, i) == True and self.preglej_stolpec(stevilo, j) == True and self.preglej_kvadrat(stevilo, i, j) == True:
-                    self.tabela[i][j] = stevilo
-                else:
-                    self.tabela[i][j] = None
-        return self.tabela
+                indeks = (i, j)
+                slovar[indeks] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        
+        self.seznam_uporabnih_stevil = slovar
+        self.indeks = (0,0)
 
-
-
-#    def prva_vrstica(self):
-#        tabela = self.oblika_tabele()
-#        vrstica = tabela[0]
-#        for j in range(8):
-#            stevilka = None
-#            while stevilka in vrstica:
-#                stevilka = random.choice(stevilke) 
-#            vrstica[j] = stevilka
-#        for i in stevilke:
-#            if i not in vrstica:
-#                vrstica[8] = i
-#            else:
-#                pass
-#        return vrstica
-
-#    def druga_vrstica(self):
-#        tabela = self.oblika_tabele()
-#        tabela[0] = self.prva_vrstica()
-#        for k in range(9):
-#            if k == 0:
-#                pass
-#            else:
-#                for j in range(8):
-#                    pass
-#        return tabela
-
+        
     def preglej_vrstico(self, stevilo, vrstica):
         if stevilo in self.tabela[vrstica]:
             return False
@@ -103,24 +67,79 @@ class Plosca:
         else:
             return True
         
+    def naslednji_indeks(self):
+        sez = list(self.indeks)
+        if sez[1] == 8:
+            sez[1] = 0
+            sez[0] += 1
+            return tuple(sez)
+        else:
+            sez[1] += 1
+            return tuple(sez)
+
+
+    def prejsnji_indeks(self):
+        sez = list(self.indeks)
+        if sez[1] == 0:
+            sez[1] = 8
+            sez[0] -= 1
+            return tuple(sez)
+        else:
+            sez[1] -= 1
+            return tuple(sez) 
+
+
+    def sudoku(self, indeks):
+        '''Program se ustavi, ko je tabela polna. Za vsak indeks preveri, če lahko da na dano mesto v tabeli neko število.
+        Če ja, število postavi tja in gre na naslednji indeks. Če ne, preveri drugo število, sproti že porabljene možnosti
+        briše iz seznama možnih števil. Če je ta seznam prazen, pa na danem mestu ni nobenega števila, se vrnem eno mesto
+        nazaj, pobrišem tisto število in tja postavim drugo število.'''
+        self.indeks = indeks
+        if self.tabela[8][8] != None:
+            return self.tabela
+        elif self.seznam_uporabnih_stevil[self.indeks] == []:
+            self.seznam_uporabnih_stevil[self.indeks] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            self.indeks = self.prejsnji_indeks()
+            sez = list(self.indeks)
+            vrsta = sez[0]
+            stolpec = sez[1]
+            stevilo_na_prejsnjem_indeksu = self.tabela[vrsta][stolpec]
+            self.seznam_uporabnih_stevil[self.indeks].remove(stevilo_na_prejsnjem_indeksu)
+            self.tabela[vrsta][stolpec] = None
+            return self.sudoku(self.indeks)
+        else:
+            sez = list(self.indeks)
+            vrsta = sez[0]
+            stolpec = sez[1]
+            stevilo = random.choice(self.seznam_uporabnih_stevil[self.indeks])
+            
+            if self.preglej_vrstico(stevilo, vrsta) == True and self.preglej_stolpec(stevilo, stolpec) == True and self.preglej_kvadrat(stevilo, vrsta, stolpec) == True:
+                self.tabela[vrsta][stolpec] = stevilo
+                indeks = self.naslednji_indeks()
+                return self.sudoku(indeks)
+            else:
+                self.seznam_uporabnih_stevil[self.indeks].remove(stevilo)
+                return self.sudoku(self.indeks)
+        
+        
+        
+
 
 
 
 
 jst = Plosca()
-jst.tabela[4][6] = 3
-jst.tabela[5][8] = 5
+#jst.tabela[4][6] = 3
+#jst.tabela[5][8] = 5
 print(jst.tabela)
-print(jst.preglej_vrstico(3, 4))
-print(jst.preglej_vrstico(None, 4))
-print(jst.preglej_stolpec(None, 4))
-print(jst.preglej_stolpec(0, 4))
-print(jst.preglej_kvadrat(3, 4, 8))
-print(jst.preglej_kvadrat(5, 5, 8))
-print(jst.preglej_kvadrat(3, 4, 2))
-print(jst.poskusna_plosca())
-#print(jst.v_redu_plosca())
-    
-            
-
-
+#print(jst.preglej_vrstico(3, 4))
+#print(jst.preglej_vrstico(None, 4))
+#print(jst.preglej_stolpec(None, 4))
+#print(jst.preglej_stolpec(0, 4))
+#print(jst.preglej_kvadrat(3, 4, 8))
+#print(jst.preglej_kvadrat(5, 5, 8))
+#print(jst.preglej_kvadrat(3, 4, 2))
+#print(jst.seznam_uporabnih_stevil)
+print(jst.indeks)
+print(jst.seznam_uporabnih_stevil[jst.indeks])
+print(jst.sudoku(jst.indeks))
