@@ -171,33 +171,38 @@ class PripravljenaMreza:
         return slovar 
 
 
-    def naredi_slovar_iz_mreze(self, mreza):
-        slovar = {}
-        for i in range(9):
-            for j in range(9):
-                slovar[(i, j)] = mreza[i][j]
-        return slovar 
-
-
     def pripravi_sudoku(self):
         prazni_prostori = self.izbrisana_mesta()
-        mreza = self.naredi_slovar_iz_mreze(self.polna_plosca)
-        nova_mreza = {}
-        for mesto in mreza:
-            if mesto in prazni_prostori:
-                nova_mreza[mesto] = '_'
-            else:
-                nova_mreza[mesto] = mreza[mesto]
+        mreza = self.kopija_mreze(self.polna_plosca)
+        for prostor in prazni_prostori:
+            vrsta = prostor[0]
+            stolpec = prostor[1]
+            mreza[vrsta][stolpec] = '_'
+        return mreza
+        
+
+
+    def kopija_mreze(self, mreza):
+        nova_mreza = []
+        for vrsta in mreza:
+            nova_mreza.append([stevilka for stevilka in vrsta])
         return nova_mreza
+            
+
+        
+
+
+
+
 
 def narisi(mreza, sudoku):
-    for vrsta in mreza:
+    for vrsta in sudoku:
         print('')
         for stevilka in vrsta:
             print(stevilka, end ='')
             print(' ', end ='')
     print('\n\n#######RESITEV########')
-    for vrsta in sudoku:
+    for vrsta in mreza:
         print('')
         for stevilka in vrsta:
             print(stevilka, end ='')
@@ -223,4 +228,5 @@ mreza = jaz2.polna_plosca
 sudoku = jaz2.pripravi_sudoku()
 print(mreza)
 print(sudoku)
-#narisi(mreza, sudoku)
+narisi(mreza, sudoku)
+
