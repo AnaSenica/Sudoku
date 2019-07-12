@@ -13,6 +13,7 @@ class Plosca:
             tabela.append(vrstica)
         
         self.tabela = tabela
+        self.preveri_ce_je_rekurzija_predolga = []
 
         slovar = {}
         for i in range(9):
@@ -93,9 +94,14 @@ class Plosca:
         '''Program se ustavi, ko je tabela polna. Za vsak indeks preveri, če lahko da na dano mesto v tabeli neko število.
         Če ja, število postavi tja in gre na naslednji indeks. Če ne, preveri drugo število, sproti že porabljene možnosti
         briše iz seznama možnih števil. Če je ta seznam prazen, pa na danem mestu ni nobenega števila, se vrnem eno mesto
-        nazaj, pobrišem tisto število in tja postavim drugo število.'''
+        nazaj, pobrišem tisto število in tja postavim drugo število.
+        Problem: rekurzija je včasih predolga, zato sem jo omejilana 950 klicev. Če je rekurzija predolga, funkcija vrne
+        'Predolga rekurzija'.'''
+    
         self.indeks = indeks
-        if self.tabela[8][8] != None:
+        if len(self.preveri_ce_je_rekurzija_predolga) == 960:
+            return 'Predolga rekurzija'
+        elif self.tabela[8][8] != None:
             return self.tabela
         elif self.seznam_uporabnih_stevil[self.indeks] == []:
             self.seznam_uporabnih_stevil[self.indeks] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -106,6 +112,7 @@ class Plosca:
             stevilo_na_prejsnjem_indeksu = self.tabela[vrsta][stolpec]
             self.seznam_uporabnih_stevil[self.indeks].remove(stevilo_na_prejsnjem_indeksu)
             self.tabela[vrsta][stolpec] = None
+            self.preveri_ce_je_rekurzija_predolga.append(0)
             return self.sudoku(self.indeks)
         else:
             sez = list(self.indeks)
@@ -116,13 +123,52 @@ class Plosca:
             if self.preglej_vrstico(stevilo, vrsta) == True and self.preglej_stolpec(stevilo, stolpec) == True and self.preglej_kvadrat(stevilo, vrsta, stolpec) == True:
                 self.tabela[vrsta][stolpec] = stevilo
                 indeks = self.naslednji_indeks()
+                self.preveri_ce_je_rekurzija_predolga.append(0)
                 return self.sudoku(indeks)
             else:
                 self.seznam_uporabnih_stevil[self.indeks].remove(stevilo)
+                self.preveri_ce_je_rekurzija_predolga.append(0)
                 return self.sudoku(self.indeks)
-        
-        
-        
+
+
+
+class PripravljenaMreza:
+
+    def __init__(self, tezavnost):
+        self.tezavnost = tezavnost
+        self.slovar = {}
+        self.polna_plosca = self.pripravi_polno_plosco()
+
+
+    def pripravi_polno_plosco(self):
+        plosca = Plosca()
+        polna_plosca = plosca.sudoku(plosca.indeks)
+        if polna_plosca == 'Predolga rekurzija':
+            return self.pripravi_polno_plosco()
+        else:
+            return polna_plosca
+
+
+    
+
+
+    def nakljucna_mesta(self):
+        stevilo1 = random.choice(stevilke)
+        stevilo2 = random.choice(stevilke)
+        mesto = (stevilo1, stevilo2)
+        return mesto
+    
+
+    def izbrisana_mesta(self):
+        slovar = {}
+        stevilo = self.tezavnost
+        while len(slovar) < stevilo:
+            mesto = self.nakljucna_mesta()
+            if mesto not in slovar:
+                slovar[mesto] = self.slovar[mesto]
+            else:
+                pass
+
 
 
 
@@ -131,7 +177,7 @@ class Plosca:
 jst = Plosca()
 #jst.tabela[4][6] = 3
 #jst.tabela[5][8] = 5
-print(jst.tabela)
+#print(jst.tabela)
 #print(jst.preglej_vrstico(3, 4))
 #print(jst.preglej_vrstico(None, 4))
 #print(jst.preglej_stolpec(None, 4))
@@ -140,6 +186,8 @@ print(jst.tabela)
 #print(jst.preglej_kvadrat(5, 5, 8))
 #print(jst.preglej_kvadrat(3, 4, 2))
 #print(jst.seznam_uporabnih_stevil)
-print(jst.indeks)
-print(jst.seznam_uporabnih_stevil[jst.indeks])
+#print(jst.indeks)
+#print(jst.seznam_uporabnih_stevil[jst.indeks])
 print(jst.sudoku(jst.indeks))
+jaz = PripravljenaMreza(4)
+print(jaz.polna_plosca)
