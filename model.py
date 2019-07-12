@@ -137,6 +137,8 @@ class PripravljenaMreza:
     def __init__(self, tezavnost):
         self.tezavnost = tezavnost
         self.polna_plosca = self.pripravi_polno_plosco()
+        self.resitve = self.izbrisana_mesta()
+        self.pripravljena_plosca = self.pripravi_sudoku()
 
 
     def pripravi_polno_plosco(self):
@@ -172,7 +174,7 @@ class PripravljenaMreza:
 
 
     def pripravi_sudoku(self):
-        prazni_prostori = self.izbrisana_mesta()
+        prazni_prostori = self.resitve
         mreza = self.kopija_mreze(self.polna_plosca)
         for prostor in prazni_prostori:
             vrsta = prostor[0]
@@ -181,7 +183,6 @@ class PripravljenaMreza:
         return mreza
         
 
-
     def kopija_mreze(self, mreza):
         nova_mreza = []
         for vrsta in mreza:
@@ -189,7 +190,42 @@ class PripravljenaMreza:
         return nova_mreza
             
 
+class Igra:
+    def __init__(self, tezavnost):
+        self.tezavnost = tezavnost
+        self.mreza = PripravljenaMreza(tezavnost)
+        self.polna = self.mreza.polna_plosca
+        self.sudoku = self.mreza.pripravljena_plosca
+        self.resitve = self.mreza.resitve
         
+
+    def ugibaj(self, stevilka, vrsta, stolpec):
+        mozne_resitve = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        if stevilka not in mozne_resitve:
+            return 'Napaka 1.'
+        elif (vrsta, stolpec) not in self.resitve:
+            return 'Napaka 2.'
+        elif self.polna[vrsta][stolpec] == stevilka:
+            self.sudoku[vrsta][stolpec] = stevilka
+            if self.zmaga():
+                return 'Zmaga.'
+            else:
+                return 'Pravilno.'
+        else:
+            self.sudoku[vrsta][stolpec] = stevilka
+            return 'Napacno.'
+
+
+    def zmaga(self):
+        if self.sudoku == self.polna:
+            return True
+        else:
+            return False
+
+    
+
+
+
 
 
 
@@ -210,23 +246,10 @@ def narisi(mreza, sudoku):
         
         
 
+A = Igra(3)
+print(A.polna)
+print(A.sudoku)
 
 
 
-jst = Plosca()
-#print(jst.seznam_uporabnih_stevil)
-#print(jst.indeks)
-#print(jst.seznam_uporabnih_stevil[jst.indeks])
-#print(jst.sudoku(jst.indeks))
-jaz2 = PripravljenaMreza(5)
-print(jaz2.polna_plosca)
-print('')
-print(jaz2.izbrisana_mesta())
-print('')
-
-mreza = jaz2.polna_plosca
-sudoku = jaz2.pripravi_sudoku()
-print(mreza)
-print(sudoku)
-narisi(mreza, sudoku)
 
