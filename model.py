@@ -170,23 +170,25 @@ class PripravljenaMreza:
                 pass
         return slovar 
 
-    def podvoji_mrezo(self):
-        mreza = []
-        for vrsta in self.polna_plosca:
-            vrstica = []
-            for stevilka in vrsta:
-                vrstica.append(stevilka)
-            mreza.append(vrsta)
-        return mreza
+
+    def naredi_slovar_iz_mreze(self, mreza):
+        slovar = {}
+        for i in range(9):
+            for j in range(9):
+                slovar[(i, j)] = mreza[i][j]
+        return slovar 
+
 
     def pripravi_sudoku(self):
         prazni_prostori = self.izbrisana_mesta()
-        mreza = self.podvoji_mrezo()
-        for mesto in prazni_prostori:
-            vrsta = mesto[0]
-            stolpec = mesto[1]
-            mreza[vrsta][stolpec] = '_'
-        return mreza
+        mreza = self.naredi_slovar_iz_mreze(self.polna_plosca)
+        nova_mreza = {}
+        for mesto in mreza:
+            if mesto in prazni_prostori:
+                nova_mreza[mesto] = '_'
+            else:
+                nova_mreza[mesto] = mreza[mesto]
+        return nova_mreza
 
 def narisi(mreza, sudoku):
     for vrsta in mreza:
@@ -221,4 +223,4 @@ mreza = jaz2.polna_plosca
 sudoku = jaz2.pripravi_sudoku()
 print(mreza)
 print(sudoku)
-narisi(mreza, sudoku)
+#narisi(mreza, sudoku)
