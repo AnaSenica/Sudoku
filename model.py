@@ -136,7 +136,6 @@ class PripravljenaMreza:
 
     def __init__(self, tezavnost):
         self.tezavnost = tezavnost
-        self.slovar = {}
         self.polna_plosca = self.pripravi_polno_plosco()
 
 
@@ -149,12 +148,10 @@ class PripravljenaMreza:
             return polna_plosca
 
 
-    
-
-
     def nakljucna_mesta(self):
-        stevilo1 = random.choice(stevilke)
-        stevilo2 = random.choice(stevilke)
+        izbiram_med = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        stevilo1 = random.choice(izbiram_med)
+        stevilo2 = random.choice(izbiram_med)
         mesto = (stevilo1, stevilo2)
         return mesto
     
@@ -162,32 +159,66 @@ class PripravljenaMreza:
     def izbrisana_mesta(self):
         slovar = {}
         stevilo = self.tezavnost
+        polna_plosca = self.polna_plosca
         while len(slovar) < stevilo:
             mesto = self.nakljucna_mesta()
+            vrsta = mesto[0]
+            stolpec = mesto[1]
             if mesto not in slovar:
-                slovar[mesto] = self.slovar[mesto]
+                slovar[mesto] = polna_plosca[vrsta][stolpec]
             else:
                 pass
+        return slovar 
 
+    def podvoji_mrezo(self):
+        mreza = []
+        for vrsta in self.polna_plosca:
+            vrstica = []
+            for stevilka in vrsta:
+                vrstica.append(stevilka)
+            mreza.append(vrsta)
+        return mreza
 
+    def pripravi_sudoku(self):
+        prazni_prostori = self.izbrisana_mesta()
+        mreza = self.podvoji_mrezo()
+        for mesto in prazni_prostori:
+            vrsta = mesto[0]
+            stolpec = mesto[1]
+            mreza[vrsta][stolpec] = '_'
+        return mreza
+
+def narisi(mreza, sudoku):
+    for vrsta in mreza:
+        print('')
+        for stevilka in vrsta:
+            print(stevilka, end ='')
+            print(' ', end ='')
+    print('\n\n#######RESITEV########')
+    for vrsta in sudoku:
+        print('')
+        for stevilka in vrsta:
+            print(stevilka, end ='')
+            print(' ', end ='')
+        
+        
 
 
 
 
 jst = Plosca()
-#jst.tabela[4][6] = 3
-#jst.tabela[5][8] = 5
-#print(jst.tabela)
-#print(jst.preglej_vrstico(3, 4))
-#print(jst.preglej_vrstico(None, 4))
-#print(jst.preglej_stolpec(None, 4))
-#print(jst.preglej_stolpec(0, 4))
-#print(jst.preglej_kvadrat(3, 4, 8))
-#print(jst.preglej_kvadrat(5, 5, 8))
-#print(jst.preglej_kvadrat(3, 4, 2))
 #print(jst.seznam_uporabnih_stevil)
 #print(jst.indeks)
 #print(jst.seznam_uporabnih_stevil[jst.indeks])
-print(jst.sudoku(jst.indeks))
-jaz = PripravljenaMreza(4)
-print(jaz.polna_plosca)
+#print(jst.sudoku(jst.indeks))
+jaz2 = PripravljenaMreza(5)
+print(jaz2.polna_plosca)
+print('')
+print(jaz2.izbrisana_mesta())
+print('')
+
+mreza = jaz2.polna_plosca
+sudoku = jaz2.pripravi_sudoku()
+print(mreza)
+print(sudoku)
+narisi(mreza, sudoku)
