@@ -193,7 +193,7 @@ class PripravljenaMreza:
 class Igra:
     def __init__(self, tezavnost):
         self.tezavnost = tezavnost
-        self.mreza = PripravljenaMreza(tezavnost)
+        self.mreza = PripravljenaMreza(self.tezavnost)
         self.polna = self.mreza.polna_plosca
         self.sudoku = self.mreza.pripravljena_plosca
         self.resitve = self.mreza.resitve
@@ -222,7 +222,6 @@ class Igra:
         else:
             return False
 
-    
 
 
 
@@ -246,9 +245,13 @@ def narisi(mreza, sudoku):
         
         
 
-A = Igra(3)
-print(A.polna)
-print(A.sudoku)
+def nova_igra(tezavnost):
+    return Igra(tezavnost)
+
+
+
+
+
 
 
 
