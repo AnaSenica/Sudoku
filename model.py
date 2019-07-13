@@ -222,26 +222,6 @@ class Igra:
         else:
             return False
 
-
-
-
-
-
-
-
-
-def narisi(mreza, sudoku):
-    for vrsta in sudoku:
-        print('')
-        for stevilka in vrsta:
-            print(stevilka, end ='')
-            print(' ', end ='')
-    print('\n\n#######RESITEV########')
-    for vrsta in mreza:
-        print('')
-        for stevilka in vrsta:
-            print(stevilka, end ='')
-            print(' ', end ='')
         
         
 
