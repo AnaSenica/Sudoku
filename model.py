@@ -1,6 +1,8 @@
 import random
+import json
 
 stevilke = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+zacetek = 'Z'
 
 class Plosca:
         
@@ -191,12 +193,18 @@ class PripravljenaMreza:
             
 
 class Igra:
-    def __init__(self, tezavnost):
+
+    def __init__(self, tezavnost, polna = None, sudoku = None, resitve = None):
         self.tezavnost = tezavnost
-        self.mreza = PripravljenaMreza(self.tezavnost)
-        self.polna = self.mreza.polna_plosca
-        self.sudoku = self.mreza.pripravljena_plosca
-        self.resitve = self.mreza.resitve
+        if polna == None and sudoku == None and resitve == None:
+            self.mreza = PripravljenaMreza(self.tezavnost)
+            self.polna = self.mreza.polna_plosca
+            self.sudoku = self.mreza.pripravljena_plosca
+            self.resitve = self.mreza.resitve
+        else:
+            self.polna = polna
+            self.sudoku = sudoku
+            self.resitve = resitve
         
 
     def ugibaj(self, stevilka, vrsta, stolpec):
@@ -222,11 +230,75 @@ class Igra:
         else:
             return False
 
-        
-        
 
-def nova_igra(tezavnost):
-    return Igra(tezavnost)
+class Sudoku:
+
+    def __init__(self, datoteka_s_stanjem):
+        '''V self.igre sta pod id-ji shranjena igra in stanje. '''
+        self.igre = {}
+        self.datoteka_s_stanjem = datoteka_s_stanjem
+
+
+    def nalozi_igre_iz_datoteke(self):
+        with open(self.datoteka_s_stanjem, 'r', encoding = 'utf-8') as f:
+            igre = json.load(f)
+            self.igre = {int(id_igre) : (Igra(igre[id_igre]['tezavnost'], igre[id_igre]['polna_mreza'], igre[id_igre]['resevana_mreza'], igre[id_igre]['resitve']), igre[id_igre]['stanje']) for id_igre in igre}
+        return
+
+
+    def zapisi_igro_v_datoteko(self):
+        '''Iz self.igre zapiše vse elemente v datoteko.'''
+        with open(self.datoteka_s_stanjem, 'w', encoding = 'utf-8') as f:
+            igre = {}
+            for id_igre, (igra, stanje) in self.igre.items():
+                igre[id_igre] = {'tezavnost': igra.tezavnost, 'polna_mreza': igra.polna, 'resevana_mreza': igra.sudoku, 'resitve': igra.resitve, 'stanje': stanje}
+            json.dump(igre, f)
+        return
+
+
+    def prost_id_igre(self):
+        if len(self.igre) == 0:
+            return 0
+        else:
+            return max(self.igre.keys()) + 1
+
+    def nova_igra(self, tezavnost):
+        self.nalozi_igre_iz_datoteke()
+        id_igre = self.prost_id_igre()
+        igra = Igra(tezavnost)
+        self.igre[id_igre] = (igra, zacetek)
+        self.zapisi_igro_v_datoteko()
+        return id_igre
+
+    
+    def ugibaj(self, id_igre, stevilka, vrsta, stolpec):
+        self.nalozi_igre_iz_datoteke()
+        igra = self.igre[id_igre][0]
+        novo_stanje = igra.ugibaj(stevilka, vrsta, stolpec)
+        self.igre[id_igre] = (igra, novo_stanje)
+        self.zapisi_igro_v_datoteko()
+        return
+
+
+
+
+
+#def nova_igra(tezavnost):
+#    return Igra(tezavnost)
+
+
+jaz = Sudoku("c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\stanje.json")
+jaz.nova_igra(3)
+#print(jaz.igre)
+#print(jaz.igre[0][0].tezavnost)
+#print(jaz.datoteka_s_stanjem)
+#jaz.nova_igra(4)
+#print(jaz.igre)
+#print(jaz.igre[0][0].sudoku)
+#jaz.ugibaj(0, 3, 4, 5)
+
+
+
 
 
 

@@ -2,6 +2,8 @@ import model
 
 stevila = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
+'''DA BO DELOVALO, ZAKOMENTIRAJ CEL CLASS IGRA V MODELU IN ODKOMENTIRAJ FUNKCIJO nova_igra(tezavnost)!!!'''
+
 def pozeni_vmesnik():
     #zahtevaj izbiro težavnosti:
     stevilo = tezavnost()
