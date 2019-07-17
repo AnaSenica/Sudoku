@@ -156,18 +156,15 @@ class PripravljenaMreza:
         izbiram_med = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         stevilo1 = random.choice(izbiram_med)
         stevilo2 = random.choice(izbiram_med)
-        mesto = (stevilo1, stevilo2)
+        mesto = [stevilo1, stevilo2]
         return mesto
     
 
     def izbrisana_mesta(self):
         seznam = []
         stevilo = self.tezavnost
-        polna_plosca = self.polna_plosca
         while len(seznam) < stevilo:
             mesto = self.nakljucna_mesta()
-            vrsta = mesto[0]
-            stolpec = mesto[1]
             if mesto not in seznam:
                 seznam.append(mesto)
             else:
@@ -211,7 +208,7 @@ class Igra:
         mozne_resitve = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         if stevilka not in mozne_resitve:
             return 'Napaka 1.'
-        elif (vrsta, stolpec) not in self.resitve:
+        elif [vrsta, stolpec] not in self.resitve:
             return 'Napaka 2.'
         elif self.polna[vrsta][stolpec] == stevilka:
             self.sudoku[vrsta][stolpec] = stevilka
@@ -244,7 +241,7 @@ class Sudoku:
             igre = json.load(f)
             self.igre = {int(id_igre) : (Igra(igre[id_igre]['tezavnost'], igre[id_igre]['polna_mreza'], igre[id_igre]['resevana_mreza'], igre[id_igre]['resitve']), igre[id_igre]['stanje']) for id_igre in igre}
         return
-#POPRAVI: pravi, da je preveč oklepajev. Poskusi popraviti, da bodo rešitve zapisane kot nabor, ne kot slovar!!!
+    #POPRAVI: pravi, da je preveč oklepajev. Poskusi popraviti, da bodo rešitve zapisane kot nabor, ne kot slovar!!!
 
     def zapisi_igro_v_datoteko(self):
         '''Iz self.igre zapiše vse elemente v datoteko.'''
@@ -283,8 +280,8 @@ class Sudoku:
 
 
 
-#def nova_igra(tezavnost):
-#    return Igra(tezavnost)
+def nova_igra(tezavnost):
+    return Igra(tezavnost)
 
 
 #jaz = Sudoku("c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\stanje.json")
