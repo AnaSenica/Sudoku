@@ -161,18 +161,18 @@ class PripravljenaMreza:
     
 
     def izbrisana_mesta(self):
-        slovar = {}
+        seznam = []
         stevilo = self.tezavnost
         polna_plosca = self.polna_plosca
-        while len(slovar) < stevilo:
+        while len(seznam) < stevilo:
             mesto = self.nakljucna_mesta()
             vrsta = mesto[0]
             stolpec = mesto[1]
-            if mesto not in slovar:
-                slovar[mesto] = polna_plosca[vrsta][stolpec]
+            if mesto not in seznam:
+                seznam.append(mesto)
             else:
                 pass
-        return slovar 
+        return seznam
 
 
     def pripravi_sudoku(self):
@@ -244,7 +244,7 @@ class Sudoku:
             igre = json.load(f)
             self.igre = {int(id_igre) : (Igra(igre[id_igre]['tezavnost'], igre[id_igre]['polna_mreza'], igre[id_igre]['resevana_mreza'], igre[id_igre]['resitve']), igre[id_igre]['stanje']) for id_igre in igre}
         return
-
+#POPRAVI: pravi, da je preveč oklepajev. Poskusi popraviti, da bodo rešitve zapisane kot nabor, ne kot slovar!!!
 
     def zapisi_igro_v_datoteko(self):
         '''Iz self.igre zapiše vse elemente v datoteko.'''
@@ -287,8 +287,8 @@ class Sudoku:
 #    return Igra(tezavnost)
 
 
-jaz = Sudoku("c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\stanje.json")
-jaz.nova_igra(3)
+#jaz = Sudoku("c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\stanje.json")
+#jaz.nova_igra(3)
 #print(jaz.igre)
 #print(jaz.igre[0][0].tezavnost)
 #print(jaz.datoteka_s_stanjem)
