@@ -49,10 +49,31 @@ def pokazi_igro():
 @bottle.post('/igra/')
 def ugibaj():
     id_igre = bottle.request.get_cookie('id_igre', secret = SKRIVNOST)
-    stevilo_za_ugib = int(bottle.request.forms.getunicode("stevilo"))
-    sudoku.ugibaj(id_igre, stevilo_za_ugib, int(vrsta), stolpec)
-    bottle.redirect('/igra/')
+    stevilo_za_ugib = (bottle.request.forms.getunicode("stevilo"))
+    vrsta_za_ugib = (bottle.request.forms.getunicode("vrsta"))
+    stolpec_za_ugib = (bottle.request.forms.getunicode("stolpec"))
+    if stevilo_za_ugib in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+        sudoku.ugibaj(id_igre, int(stevilo_za_ugib), int(vrsta_za_ugib) - 1, int(stolpec_za_ugib) - 1)
+        if sudoku.igre[id_igre][1] == 'Zmaga.':
+            bottle.redirect('/zmaga/')
+        elif sudoku.igre[id_igre][1] == 'Napaka 2.':
+            bottle.redirect('/napaka2/')
+        else:
+            bottle.redirect('/igra/')
+    else:
+        bottle.redirect('/napaka1/')
 
+        
+@bottle.get('/zmaga/')
+def zmaga():
+    return bottle.template('zmaga.tpl')
 
+@bottle.get('/napaka1/')
+def napaka1():
+    return bottle.template('napaka1.tpl')
+
+@bottle.get('/napaka2/')
+def napaka2():
+    return bottle.template('napaka2.tpl')
 
 bottle.run(reloader=True, debug=True)
