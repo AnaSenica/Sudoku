@@ -1,7 +1,7 @@
 % rebase ('osnova.tpl', title = 'Sudoku')
 
 
-
+<p align ='center'>
 <table border>
     %sudoku = igra.sudoku
     %polna = igra.polna
@@ -13,19 +13,19 @@
         %stevilo = sudoku[vrsta][stolpec]
 
         %if stevilo == '_':
-        <td>
+        <td width = "35px" height = "36px">
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo" style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
         </td>
         %else:
-        <td>
+        <td width = "35px" height = "36px">
             % if stevilo != polna[vrsta][stolpec]:
             <font color="red">{{stevilo}}</font>
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo"  style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
@@ -34,24 +34,25 @@
             %end
         </td>
         %end
-        <td></td>
+        <td width = "0.5"></td>
         
 
         %else:
         %stevilo = sudoku[vrsta][stolpec]
         %if stevilo == '_':
-        <td>
+        <td width = "35px" height = "36px">
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo"  style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
         </td>
         %else:
-        <td>
+        <td width = "35px" height = "36px"> 
             % if stevilo != polna[vrsta][stolpec]:
+            <font color="red">{{stevilo}}</font>
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo"  style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
@@ -74,19 +75,19 @@
         %stevilo = sudoku[vrsta][stolpec]
     
         %if stevilo == '_':
-        <td>
+        <td width = "35px" height = "36px">
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo"  style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
         </td>
         %else:
-        <td>
+        <td width = "35px" height = "36px">
             % if stevilo != polna[vrsta][stolpec]:
             <font color="red">{{stevilo}}</font>
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo"  style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
@@ -95,25 +96,25 @@
             %end
         </td>
         %end
-        <td></td>
+        <td width = "0.5"></td>
             
     
         %else:
         %stevilo = sudoku[vrsta][stolpec]
         %if stevilo == '_':
-        <td>
+        <td width = "35px" height = "36px">
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo"  style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
         </td>
         %else:
-        <td>
+        <td width = "35px" height = "36px">
             % if stevilo != polna[vrsta][stolpec]:
             <font color="red">{{stevilo}}</font>
             <form action = "/igra/"  method = "post" >
-                <input name = "stevilo" size="3">
+                <input name = "stevilo"  style="width: 30px; height: 30px">
                 <input type = "hidden" name="vrsta" value="{{vrsta}}">
                 <input type = "hidden" name="stolpec" value="{{stolpec}}">
             </form>
@@ -130,3 +131,4 @@
     %end
 
 </table>
+</p>
