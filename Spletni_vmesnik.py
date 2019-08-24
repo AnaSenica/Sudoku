@@ -2,10 +2,11 @@ import bottle
 import model
 
 SKRIVNOST = 'igrica'
-bottle.TEMPLATE_PATH.insert(0, "c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\views")
-DATOTEKA_S_STANJEM = "c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\stanje.json"
+#bottle.TEMPLATE_PATH.insert(0, "c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\views")
+#DATOTEKA_S_STANJEM = "c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\stanje.json"
 
-sudoku = model.Sudoku(DATOTEKA_S_STANJEM)
+#sudoku = model.Sudoku(DATOTEKA_S_STANJEM)
+sudoku = model.Sudoku('stanje.json')
 
 
 @bottle.get('/')
