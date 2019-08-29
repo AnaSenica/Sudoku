@@ -19,7 +19,7 @@ def izberi_tezavnost():
 
 @bottle.get('/pravila/')
 def pravila():
-    return bottle.template('pravila.tpl')
+    return bottle.template('preizkus.tpl')
 
 @bottle.post('/tezavnost1/')
 def nova_igra1():
@@ -45,7 +45,7 @@ def nova_igra3():
 @bottle.get('/igra/')
 def pokazi_igro():
     id_igre = bottle.request.get_cookie('id_igre', secret = SKRIVNOST)
-    return bottle.template('mreza3.tpl', igra = sudoku.igre[id_igre][0], id_igre = id_igre, poskus = sudoku.igre[id_igre][1])
+    return bottle.template('mreza.tpl', igra = sudoku.igre[id_igre][0], id_igre = id_igre, poskus = sudoku.igre[id_igre][1])
 
 @bottle.post('/igra/')
 def ugibaj():
@@ -61,8 +61,6 @@ def ugibaj():
         sudoku.ugibaj(id_igre, int(stevilo_za_ugib), int(vrsta_za_ugib), int(stolpec_za_ugib))
         if sudoku.igre[id_igre][1] == 'Zmaga.':
             bottle.redirect('/zmaga/')
-        elif sudoku.igre[id_igre][1] == 'Napaka 2.':
-            bottle.redirect('/napaka2/')
         else:
             bottle.redirect('/igra/')
     else:
@@ -104,9 +102,6 @@ def zmaga():
 def napaka1():
     return bottle.template('napaka1.tpl')
 
-@bottle.get('/napaka2/')
-def napaka2():
-    return bottle.template('napaka2.tpl')
 
 
 bottle.run(reloader=True, debug=True)

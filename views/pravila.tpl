@@ -1,4 +1,4 @@
-% rebase ('osnova.tpl', title = 'Sudoku')
+% rebase ('osnovna_stran.tpl', title = 'Sudoku')
 
 <h1>Pravila igre</h1>
 
