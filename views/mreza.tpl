@@ -1,9 +1,19 @@
 % rebase ('osnovna_stran.tpl', title = 'Sudoku')
 
 <div class="tile is-ancestor">
-    <div class="tile"></div>
-    <div class="tile">
-
+        <div class="tile is-11">
+            <div class="tile is-vertical is-5 notification is-primary">
+                    <p class="title">Pa začnimo...</p>
+                    <p>Želite poskusiti z novo igro?<br>(Pozor: vaša igra se v tem primeru ne bo shranila)</p>
+                    <br>
+                    <p>
+                        <form action = "/" method = "get">
+                            <button type = "submit"  class="button is-rounded is-danger">Nazaj na naslovno stran</button>
+                        </form>
+                    </p>                        
+            </div>
+            <div class="tile is-1"></div>
+            <div class="tile">
 
 <p align ='center'>
 <table border>
@@ -132,8 +142,8 @@
 
 </table>
 </p>
+</div>
 
 
 </div>
-<div class="tile"></div>
 </div>
