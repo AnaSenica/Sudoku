@@ -23,21 +23,21 @@ def pravila():
 
 @bottle.post('/tezavnost1/')
 def nova_igra1():
-    tezavnost = 15
+    tezavnost = 20
     id_igre = sudoku.nova_igra(tezavnost)
     bottle.response.set_cookie('id_igre', id_igre, secret = SKRIVNOST, path = '/')
     bottle.redirect('/igra/')
 
 @bottle.post('/tezavnost2/')
 def nova_igra2():
-    tezavnost = 35
+    tezavnost = 40
     id_igre = sudoku.nova_igra(tezavnost)
     bottle.response.set_cookie('id_igre', id_igre, secret = SKRIVNOST, path = '/')
     bottle.redirect('/igra/')
 
 @bottle.post('/tezavnost3/')
 def nova_igra3():
-    tezavnost = 55
+    tezavnost = 60
     id_igre = sudoku.nova_igra(tezavnost)
     bottle.response.set_cookie('id_igre', id_igre, secret = SKRIVNOST, path = '/')
     bottle.redirect('/igra/')
