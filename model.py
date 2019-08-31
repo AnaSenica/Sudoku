@@ -280,8 +280,8 @@ class Sudoku:
 
 
 
-def nova_igra(tezavnost):
-    return Igra(tezavnost)
+#def nova_igra(tezavnost):
+#    return Igra(tezavnost)
 
 
 

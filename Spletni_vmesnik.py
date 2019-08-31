@@ -53,10 +53,6 @@ def ugibaj():
     stevilo_za_ugib = (bottle.request.forms.getunicode("stevilo"))
     vrsta_za_ugib = (bottle.request.forms.getunicode("vrsta"))
     stolpec_za_ugib = (bottle.request.forms.getunicode("stolpec"))
-    
-    print(stevilo_za_ugib)
-    print(vrsta_za_ugib)
-    print(stolpec_za_ugib)
     if stevilo_za_ugib in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
         sudoku.ugibaj(id_igre, int(stevilo_za_ugib), int(vrsta_za_ugib), int(stolpec_za_ugib))
         if sudoku.igre[id_igre][1] == 'Zmaga.':
@@ -65,7 +61,7 @@ def ugibaj():
             bottle.redirect('/igra/')
     else:
         bottle.redirect('/napaka1/')
-        
+
         
 @bottle.get('/zmaga/')
 def zmaga():
