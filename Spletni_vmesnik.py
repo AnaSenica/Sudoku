@@ -65,34 +65,7 @@ def ugibaj():
             bottle.redirect('/igra/')
     else:
         bottle.redirect('/napaka1/')
-
-
-
-#    naslov = '/igra{}{}/'.format(i, 2)
-#    @bottle.post(naslov)
-#    def ugibaj():
-#        print(naslov)
-#        id_igre = bottle.request.get_cookie('id_igre', secret = SKRIVNOST)
-#        print(id_igre)
-#        
-#        stevilo_za_ugib = (bottle.request.forms.getunicode("stevilo"))
-#        vrsta_za_ugib = i
-#        stolpec_za_ugib = 2
         
-#        print(2)
-#        if stevilo_za_ugib in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
-#            sudoku.ugibaj(id_igre, int(stevilo_za_ugib), int(vrsta_za_ugib), int(stolpec_za_ugib))
-#            if sudoku.igre[id_igre][1] == 'Zmaga.':
-#                bottle.redirect('/zmaga/')
-#            elif sudoku.igre[id_igre][1] == 'Napaka 2.':
-#                bottle.redirect('/napaka2/')
-#            else:
-#                bottle.redirect('/igra/')
-#        else:   
-#            bottle.redirect('/napaka1/')
-
-
-
         
 @bottle.get('/zmaga/')
 def zmaga():

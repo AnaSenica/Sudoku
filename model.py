@@ -241,7 +241,7 @@ class Sudoku:
             igre = json.load(f)
             self.igre = {int(id_igre) : (Igra(igre[id_igre]['tezavnost'], igre[id_igre]['polna_mreza'], igre[id_igre]['resevana_mreza'], igre[id_igre]['resitve']), igre[id_igre]['stanje']) for id_igre in igre}
         return
-    #POPRAVI: pravi, da je preveč oklepajev. Poskusi popraviti, da bodo rešitve zapisane kot nabor, ne kot slovar!!!
+    
 
     def zapisi_igro_v_datoteko(self):
         '''Iz self.igre zapiše vse elemente v datoteko.'''
@@ -284,15 +284,6 @@ def nova_igra(tezavnost):
     return Igra(tezavnost)
 
 
-#jaz = Sudoku("c:\\Users\\Alojz\\Documents\\Ana\\Študij\\1. letnik\\UVP\\PROJEKTNA NALOGA\\Sudoku\\Sudoku\\stanje.json")
-#jaz.nova_igra(3)
-#print(jaz.igre)
-#print(jaz.igre[0][0].tezavnost)
-#print(jaz.datoteka_s_stanjem)
-#jaz.nova_igra(4)
-#print(jaz.igre)
-#print(jaz.igre[0][0].sudoku)
-#jaz.ugibaj(0, 3, 4, 5)
 
 
 
